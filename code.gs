@@ -39,7 +39,19 @@ function getLinks() {
     };
     const response = UrlFetchApp.fetch(endPoint,options);
   }
-  
+  function sendChatAction(chatId){
+    let data = {
+      chat_id:chatId,
+      action:'typing'
+    };
+    const endPoint = "https://api.telegram.org/bot1812099927:AAGU_HN_pXr6GoGHLuzNaAUfV4UazUDJsz8/sendChatAction";
+    const options = {
+      method : "post",
+      contentType: 'application/json',
+      payload:JSON.stringify(data)
+    };
+    const response = UrlFetchApp.fetch(endPoint,options);
+  }
   
   
   
@@ -49,14 +61,50 @@ function getLinks() {
     const chatId = update.message.chat.id;
     const fullName = update.message.from.first_name+" "+update.message.from.last_name;
     let data = {};
-      let btnMarkup = {
-      resize_keyboard: true,
-      one_time_keyboard: true,
-      keyboard: [['Movie Reviews']]
-    };
+  
     if(messageText=="/start"){
+          sendChatAction(chatId);
+          let btnMarkup = {
+            resize_keyboard: true,
+            one_time_keyboard: true,
+            keyboard: [['Movie Reviews']]
+          };
           data = {
           text : `*Hello ${fullName}!*\nWelcome to Cinephile Malayalam bot. Choose the options from the menu accordingly.`,
+          parse_mode : "markdown",
+          chat_id : chatId,
+          reply_markup : btnMarkup
+      };
+    }
+    else if(messageText=="Movie Reviews"){
+      sendChatAction(chatId);
+          let movieList = getMovieList();
+          let btns = [];
+          for(x of movieList){
+            btns.push([x]);
+          }
+          btns.push(['Back to home']);
+          let btnMarkup = {
+            resize_keyboard: true,
+            one_time_keyboard: true,
+            keyboard: btns
+          };
+          data = {
+          text : `*Hello ${fullName}!*\nWelcome to Cinephile Malayalam bot. Choose the options from the menu accordingly.`,
+          parse_mode : "markdown",
+          chat_id : chatId,
+          reply_markup : btnMarkup
+      };
+    }
+    else if(messageText=="Back to home"){
+          sendChatAction(chatId);
+              let btnMarkup = {
+            resize_keyboard: true,
+            one_time_keyboard: true,
+            keyboard: [['Movie Reviews']]
+          };
+          data = {
+          text : `*Main Menu*`,
           parse_mode : "markdown",
           chat_id : chatId,
           reply_markup : btnMarkup
