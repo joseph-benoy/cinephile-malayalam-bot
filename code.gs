@@ -40,7 +40,7 @@ function getMovieList() {
   return movieList;
 }
 function sendReply(chatId,data){
-  const endPoint = "https://api.telegram.org/bot1812099927:AAGU_HN_pXr6GoGHLuzNaAUfV4UazUDJsz8/sendMessage";
+  const endPoint = "https://api.telegram.org/bot<bot_token>/sendMessage";
   const options = {
     method : "post",
     contentType: 'application/json',
@@ -53,7 +53,7 @@ function sendChatAction(chatId){
     chat_id:chatId,
     action:'typing'
   };
-  const endPoint = "https://api.telegram.org/bot1812099927:AAGU_HN_pXr6GoGHLuzNaAUfV4UazUDJsz8/sendChatAction";
+  const endPoint = "https://api.telegram.org/bot<bot_token>/sendChatAction";
   const options = {
     method : "post",
     contentType: 'application/json',
