@@ -9,6 +9,11 @@ function getLinks() {
       }
     });
     links = [...new Set(links)];
-    
+    let fullLinks = [];
+    for(x of links)
+    {
+      fullLinks.push("https://malayalam.filmibeat.com"+x);
+    }
+    return fullLinks;
+}
   
-  }
